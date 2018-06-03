@@ -1,0 +1,144 @@
+//                         -*-c++-*-
+//
+// Application Schema Description
+// Generated with Matisse Schema Definition Language 9.1.11 
+//
+// Generation date: Sat Jun 02 23:20:41 2018
+// Generated from database 'wat2@DESKTOP-R5JHPKA'
+//
+
+
+
+
+// Interface Definitions
+//----------------------
+
+interface Silnik : persistent {
+  attribute String<100> NazwaSilnika;
+  attribute Double MomentObrotowy;
+  attribute Double ObrotyNaMinute;
+  mt_method "CREATE INSTANCE METHOD dajKonieSilnika()
+RETURNS DOUBLE
+FOR Silnik
+BEGIN
+	RETURN SELF.MomentObrotowy * SELF.ObrotyNaMinute / 5252;
+END;";
+
+};
+
+interface Samochod : persistent {
+  attribute String<100> TypSamochodu;
+  attribute Integer IloscDrzwi;
+  relationship Set<Silnik> SilnikSam;
+  mt_method "CREATE INSTANCE METHOD dajKonie()
+RETURNS DOUBLE
+FOR Samochod
+BEGIN
+	DECLARE Engines SELECTION(Silnik);
+	DECLARE Eng Silnik;
+	SET Engines = SELF.SilnikSam;
+	SET Eng = Engines.GET(1);
+	RETURN Eng.dajKonieSilnika();
+END;";
+
+};
+
+interface Lambo : Samochod : persistent {
+  attribute Boolean WersjaV12;
+  mt_method "CREATE INSTANCE METHOD dajKonie()
+RETURNS DOUBLE
+FOR Lambo
+BEGIN
+	DECLARE Engines SELECTION(Silnik);
+	DECLARE Eng Silnik;
+	DECLARE Additional DOUBLE;
+
+	SET Engines = SELF.SilnikSam;
+	SET Eng = Engines.GET(1);
+
+	IF SELF.WersjaV12 = true THEN
+		RETURN Eng.dajKonieSilnika() + 10;
+	ELSE
+		RETURN Eng.dajKonieSilnika() + 0;
+	END IF;
+
+END;";
+
+};
+
+interface Porche : Samochod : persistent {
+  attribute Boolean Nitro;
+  mt_method "CREATE INSTANCE METHOD dajKonie()
+RETURNS DOUBLE
+FOR Porche
+BEGIN
+	DECLARE Engines SELECTION(Silnik);
+	DECLARE Eng Silnik;
+	DECLARE Additional DOUBLE;
+
+	SET Engines = SELF.SilnikSam;
+	SET Eng = Engines.GET(1);
+
+	IF SELF.Nitro = TRUE THEN
+		RETURN Eng.dajKonieSilnika() + 15;
+	ELSE
+		RETURN Eng.dajKonieSilnika();
+	END IF;
+
+END;";
+
+};
+
+interface BMW : Samochod : persistent {
+  attribute Integer TuningHP;
+  mt_method "CREATE INSTANCE METHOD dajKonie()
+RETURNS DOUBLE
+FOR BMW
+BEGIN
+	DECLARE Engines SELECTION(Silnik);
+	DECLARE Eng Silnik;
+	DECLARE Additional DOUBLE;
+
+	SET Engines = SELF.SilnikSam;
+	SET Eng = Engines.GET(1);
+
+	IF SELF.TuningHP > 0 THEN
+		RETURN Eng.dajKonieSilnika() + SELF.TuningHP;
+	ELSE
+		RETURN Eng.dajKonieSilnika();
+	END IF;
+
+END;";
+
+};
+
+interface Garaz : persistent {
+  attribute String<100> Nullable Nazwa;
+  relationship Set<Samochod> Samochody;
+  mt_method "CREATE INSTANCE METHOD dajWszystkieKonie()
+RETURNS DOUBLE
+FOR Garaz
+BEGIN
+	DECLARE ile INTEGER DEFAULT 0;
+	DECLARE wynik INTEGER DEFAULT 0;
+	DECLARE i INTEGER DEFAULT 1;
+	DECLARE Auta SELECTION(Samochod);
+	DECLARE Auto Samochod;
+	
+	SET Auta = SELF.Samochody;
+	SET ile = Auta.Count();
+	the_loop:LOOP
+		IF i >= (ile + 1) THEN
+			LEAVE the_loop;
+		END IF;
+		
+		SET Auto = Auta.GET(i);
+		SET wynik = wynik + Auto.dajKonie();
+	
+		SET i = i + 1;
+	END LOOP the_loop;
+
+	RETURN wynik;
+END;";
+
+};

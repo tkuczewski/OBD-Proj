@@ -1,0 +1,30 @@
+
+
+
+BEGIN
+	DECLARE Auto Samochod;
+	SELECT REF(l) INTO Auto FROM Samochod l WHERE l.TypSamochodu = 'Lamborghini Diablo';
+	RETURN Auto.dajKonie();
+END;
+
+BEGIN
+	DECLARE Gar Garaz;
+	SELECT REF(g) INTO Gar FROM Garaz g WHERE g.Nazwa = 'Moj';
+	RETURN Gar.dajWszystkieKonie();
+END
+
+
+BEGIN
+	DECLARE Engine Silnik;
+	SELECT REF(s) INTO Engine FROM Silnik s WHERE s.NazwaSilnika = 'LamborghiniV12';
+	RETURN Engine.dajKonieSilnika();
+END;
+
+
+BEGIN
+	DECLARE Auto Samochod;
+	SELECT REF(l) INTO Auto FROM Samochod l WHERE l.TypSamochodu = 'Lamborghini Diablo';
+	RETURN Auto.dajKonie();
+END;
+
+

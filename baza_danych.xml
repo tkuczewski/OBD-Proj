@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!-- Matisse XML Document -->
+<!-- Generated with Matisse XML Manager x32 Version 9.1.11.0 -->
+<!-- Generation date: 2018-06-02 23:18:59 -->
+<!-- Produced from database 'wat2@DESKTOP-R5JHPKA' -->
+<?mt_xml version="2"
+         container="yes"
+         oid="yes"
+         full="yes"
+         count="7"?>
+<MtContainer>
+
+<Silnik oid="4245">
+<NazwaSilnika MtBasicType="MT_STRING">LamborghiniV12</NazwaSilnika>
+<MomentObrotowy MtBasicType="MT_DOUBLE">4.790000e+002</MomentObrotowy>
+<ObrotyNaMinute MtBasicType="MT_DOUBLE">5.500000e+003</ObrotyNaMinute>
+</Silnik>
+
+<Silnik oid="4263">
+<NazwaSilnika MtBasicType="MT_STRING">CarreraGT</NazwaSilnika>
+<MomentObrotowy MtBasicType="MT_DOUBLE">4.350000e+002</MomentObrotowy>
+<ObrotyNaMinute MtBasicType="MT_DOUBLE">5.750000e+003</ObrotyNaMinute>
+</Silnik>
+
+<Silnik oid="4264">
+<NazwaSilnika MtBasicType="MT_STRING">B48</NazwaSilnika>
+<MomentObrotowy MtBasicType="MT_DOUBLE">2.950000e+002</MomentObrotowy>
+<ObrotyNaMinute MtBasicType="MT_DOUBLE">4.400000e+003</ObrotyNaMinute>
+</Silnik>
+
+<Lambo oid="4249">
+<TypSamochodu MtBasicType="MT_STRING">Lamborghini Diablo</TypSamochodu>
+<IloscDrzwi MtBasicType="MT_INTEGER">4</IloscDrzwi>
+<WersjaV12 MtBasicType="MT_BOOLEAN">True</WersjaV12>
+<Silnik oid="4245" MtRelationship="SilnikSam"/>
+</Lambo>
+
+<Porche oid="4265">
+<TypSamochodu MtBasicType="MT_STRING">Porche Carrera GT</TypSamochodu>
+<IloscDrzwi MtBasicType="MT_INTEGER">4</IloscDrzwi>
+<Nitro MtBasicType="MT_BOOLEAN">True</Nitro>
+<Silnik oid="4263" MtRelationship="SilnikSam"/>
+</Porche>
+
+<BMW oid="4267">
+<TypSamochodu MtBasicType="MT_STRING">BMW G32</TypSamochodu>
+<IloscDrzwi MtBasicType="MT_INTEGER">4</IloscDrzwi>
+<TuningHP MtBasicType="MT_INTEGER">30</TuningHP>
+<Silnik oid="4264" MtRelationship="SilnikSam"/>
+</BMW>
+
+<Garaz oid="4275">
+<Nazwa MtBasicType="MT_STRING">Moj</Nazwa>
+<Lambo oid="4249" MtRelationship="Samochody"/>
+<Porche oid="4265" MtRelationship="Samochody"/>
+<BMW oid="4267" MtRelationship="Samochody"/>
+</Garaz>
+
+
+</MtContainer>
